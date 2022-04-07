@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import 'package:currency_converter/models/currency.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -13,6 +14,25 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  List<bool> selected = [];
+  //use sharedpreference to check if selected currency exists
+  Future<void> _checkSelected(data) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      setState(() {
+        List<String> string_selected = prefs.getStringList('selected') ?? [];
+        //parse string list to boolean list
+        selected =
+            string_selected.map((e) => e == 'true' ? true : false).toList();
+        if (selected.length != data.length) {
+          selected = List.generate(data.length, (index) => false);
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void delayload() async {
     try {
       Response res =
@@ -25,8 +45,10 @@ class _LoadingState extends State<Loading> {
       List<Currency> data = List<Currency>.from(
           jsonDecode(res.body).map((e) => Currency.fromJson(e)));
       print(data);
+      _checkSelected(data);
       await Future.delayed(const Duration(milliseconds: 3000));
-      Navigator.pushReplacementNamed(context, '/home', arguments: data);
+      Navigator.pushReplacementNamed(context, '/home',
+          arguments: {"data": data, "selected": selected});
     } catch (e) {
       print(e);
     }

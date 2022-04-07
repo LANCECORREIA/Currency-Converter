@@ -13,64 +13,57 @@ class _HomeState extends State<Home> {
   double input = 0.0;
   List<Currency> data = [];
   List<bool> selected = [];
+  Map passedArgs = {};
+
+  //use sharedpreference to save the selected currency
+
+  Future<void> _saveSelected() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //parse boolean list to string list
+    List<String> string_selected =
+        selected.map((e) => e ? 'true' : 'false').toList();
+    prefs.setStringList('selected', string_selected);
+  }
+
+  //use sharedpreference to load the selected currency
+  // Future<void> _loadSelected() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     List<String> string_selected = prefs.getStringList('selected') ?? [];
+  //     //parse string list to boolean list
+  //     selected =
+  //         string_selected.map((e) => e == 'true' ? true : false).toList();
+  //   });
+  // }
+
+  //use sharedpreference to check if selected currency exists
+  // Future<void> _checkSelected() async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     setState(() {
+  //       List<String> string_selected = prefs.getStringList('selected') ?? [];
+  //       //parse string list to boolean list
+  //       selected =
+  //           string_selected.map((e) => e == 'true' ? true : false).toList();
+  //       if (selected.length != data.length) {
+  //         selected = List.generate(data.length, (index) => false);
+  //       }
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context)!.settings.arguments as List<Currency>;
-    selected = selected.isEmpty
-        ? List.generate(data.length, (index) => false)
-        : selected;
+    passedArgs = ModalRoute.of(context)!.settings.arguments as Map;
+    data = passedArgs['data'] as List<Currency>;
+    selected = passedArgs['selected'] as List<bool>;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Crypto Converter"),
       ),
-      // region
-      // body: Column(
-      //   children: [
-      //     SizedBox(
-      //       height: 20,
-      //     ),
-      //     TextFormField(
-      //       initialValue: '0.0',
-      //       autofocus: true,
-      //       decoration: InputDecoration(
-      //         labelText: "Enter Amount",
-      //         labelStyle: TextStyle(
-      //           color: Colors.black,
-      //         ),
-      //         border: OutlineInputBorder(),
-      //         icon: Icon(
-      //           Icons.currency_rupee,
-      //           color: Colors.black,
-      //         ),
-      //       ),
-      //       keyboardType: TextInputType.number,
-      //       onChanged: ((value) {
-      //         setState(() {
-      //           try {
-      //             input = double.parse(value);
-      //           } catch (e) {
-      //             input = 0.0;
-      //           }
-      //         });
-      //       }),
-      //     ),
-      //     SizedBox(
-      //       height: 20,
-      //     ),
-      //     // Card(
-      //     //   child: ListTile(
-      //     //     leading: Icon(Icons.currency_bitcoin),
-      //     //     title: Text("Total: ${input / double.parse('1')}"),
-      //     //   ),
-      //     // ),
-      //     // Card(
-      //     //   child: ListTile(
-      //     //     leading: Icon(Icons.currency_lira),
-      //     //     title: Text("Total: ${input * 0.0015}"),
-      //     //   ),
-      //     // ),
-      //   ],
-      // endregion
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -124,6 +117,7 @@ class _HomeState extends State<Home> {
                           setState(() {
                             try {
                               selected[index] = !selected[index];
+                              _saveSelected();
                             } catch (e) {
                               print(e);
                             }
