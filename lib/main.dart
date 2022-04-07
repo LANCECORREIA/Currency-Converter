@@ -1,3 +1,4 @@
+import 'package:currency_converter/screens/detail.dart';
 import 'package:currency_converter/screens/home.dart';
 import 'package:currency_converter/screens/loading.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => Loading(),
         '/home': (context) => Home(),
+        '/detail': (context) => Detail(),
       },
     );
   }
