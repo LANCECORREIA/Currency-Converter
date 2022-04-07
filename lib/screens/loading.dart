@@ -39,7 +39,7 @@ class _LoadingState extends State<Loading> {
           await get(Uri.http('api.nomics.com', '/v1/currencies/ticker', {
         'key': '867d26f67d0fa0512d0bcaced7ddc85c7e8bbbc8',
         'convert': 'INR',
-        'ids': 'BTC,ETH,XRP,ADA,USDT,XRP',
+        'ids': 'BTC,ETH,XRP,ADA,USDT,XRP,DOGE',
       }));
       print(jsonDecode(res.body));
       List<Currency> data = List<Currency>.from(
@@ -63,11 +63,11 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Color.fromARGB(255, 105, 239, 173),
       body: Center(
         child: SpinKitFoldingCube(
           color: Colors.white,
-          size: 200.0,
+          size: 100.0,
         ),
       ),
     );
