@@ -14,28 +14,109 @@ class _DetailState extends State<Detail> {
     Currency instance = ModalRoute.of(context)!.settings.arguments as Currency;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Crypto Converter"),
-        backgroundColor: Color.fromARGB(255, 105, 239, 173),
-        foregroundColor: Colors.black,
-      ),
-      body: Card(
+          title: Text("Crypto Converter"),
+          backgroundColor: Color.fromARGB(255, 105, 239, 173),
+          foregroundColor: Colors.white,
+          elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () => Navigator.pop(context),
+          )),
+      // body: Card(
+      //   child: Column(
+      //     children: <Widget>[
+      //       ListTile(
+      //         title: Text("Name"),
+      //         subtitle: Text(instance.name),
+      //       ),
+      //       ListTile(
+      //         title: Text("Price"),
+      //         subtitle: Text(instance.price),
+      //       ),
+      //       ListTile(
+      //         title: Text("Symbol"),
+      //         subtitle: Text(instance.symbol),
+      //       ),
+      //       ListTile(
+      //         title: Text("Rank"),
+      //         subtitle: Text(instance.rank),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
         child: Column(
-          children: <Widget>[
-            ListTile(
-              title: Text("Name"),
-              subtitle: Text(instance.name),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/${instance.name}.png'),
+                radius: 60,
+              ),
             ),
-            ListTile(
-              title: Text("Price"),
-              subtitle: Text(instance.price),
+            Divider(
+              height: 60,
+              color: Color.fromARGB(255, 105, 239, 173),
+              thickness: 3,
             ),
-            ListTile(
-              title: Text("Symbol"),
-              subtitle: Text(instance.symbol),
+            Text(
+              'NAME',
+              style: TextStyle(
+                color: Colors.grey,
+              ),
             ),
-            ListTile(
-              title: Text("Rank"),
-              subtitle: Text(instance.rank),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              instance.name,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'RANK',
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              instance.rank,
+              style: TextStyle(
+                  color: Colors.black,
+                  letterSpacing: 2,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'PRICE',
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              double.parse(instance.price).toStringAsFixed(2),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
