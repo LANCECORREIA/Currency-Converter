@@ -61,10 +61,10 @@ class _HomeState extends State<Home> {
     selected = passedArgs['selected'] as List<bool>;
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 234, 231, 231),
       appBar: AppBar(
         title: Text("Crypto Converter"),
-        backgroundColor: Color.fromARGB(255, 105, 239, 173),
-        foregroundColor: Colors.black,
+        backgroundColor: Colors.black,
         elevation: 0.0,
         actions: [
           IconButton(
@@ -118,13 +118,15 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      tileColor: Color.fromARGB(255, 159, 255, 223),
-                      textColor: Colors.black,
+                      tileColor: Colors.white,
                       onTap: () => Navigator.pushNamed(context, '/detail',
                           arguments: data[index]),
                       leading: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 8.0),
-                        child: Text(data[index].symbol),
+                        child: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/${data[index].name}.png'),
+                        ),
                       ),
                       title: Text(
                           "${(input / double.parse(data[index].price)).toStringAsFixed(2)}"),
@@ -140,8 +142,8 @@ class _HomeState extends State<Home> {
                           });
                         },
                         child: selected[index]
-                            ? Icon(Icons.favorite, color: Colors.teal[400])
-                            : Icon(Icons.favorite_border, color: Colors.black),
+                            ? Icon(Icons.favorite, color: Colors.red)
+                            : Icon(Icons.favorite_border, color: Colors.red),
                       ),
                     ),
                   );
