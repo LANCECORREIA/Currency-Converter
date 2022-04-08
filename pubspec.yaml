@@ -70,6 +70,8 @@ flutter:
     - assets/Dogecoin.png
     - assets/Tether.png
     - assets/XRP.png
+    - assets/Litecoin.png
+    - assets/Solana.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

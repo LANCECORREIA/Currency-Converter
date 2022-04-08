@@ -19,7 +19,7 @@ class _FavouriteState extends State<Favourite> {
       appBar: AppBar(
         title: Text("Crypto Converter"),
         backgroundColor: Color.fromARGB(255, 105, 239, 173),
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         elevation: 0.0,
       ),
       body: Padding(
@@ -62,30 +62,18 @@ class _FavouriteState extends State<Favourite> {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      tileColor: Color.fromARGB(255, 159, 255, 223),
                       textColor: Colors.black,
                       onTap: () => Navigator.pushNamed(context, '/detail',
                           arguments: data[index]),
                       leading: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 8.0),
-                        child: Text(data[index].symbol),
+                        child: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/${data[index].name}.png'),
+                        ),
                       ),
                       title: Text(
                           "${(input / double.parse(data[index].price)).toStringAsFixed(2)}"),
-                      // trailing: TextButton(
-                      //   onPressed: () {
-                      //     setState(() {
-                      //       try {
-                      //         selected[index] = !selected[index];
-                      //         _saveSelected();
-                      //       } catch (e) {
-                      //         print(e);
-                      //       }
-                      //     });
-                      //   },
-                      //   child: selected[index]
-                      //       ? Icon(Icons.favorite, color: Colors.teal[400])
-                      //       : Icon(Icons.favorite_border, color: Colors.black),
                     ),
                   );
                 },

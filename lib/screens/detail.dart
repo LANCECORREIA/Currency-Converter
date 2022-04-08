@@ -25,28 +25,6 @@ class _DetailState extends State<Detail> {
             ),
             onPressed: () => Navigator.pop(context),
           )),
-      // body: Card(
-      //   child: Column(
-      //     children: <Widget>[
-      //       ListTile(
-      //         title: Text("Name"),
-      //         subtitle: Text(instance.name),
-      //       ),
-      //       ListTile(
-      //         title: Text("Price"),
-      //         subtitle: Text(instance.price),
-      //       ),
-      //       ListTile(
-      //         title: Text("Symbol"),
-      //         subtitle: Text(instance.symbol),
-      //       ),
-      //       ListTile(
-      //         title: Text("Rank"),
-      //         subtitle: Text(instance.rank),
-      //       ),
-      //     ],
-      //   ),
-      // ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
         child: Column(
@@ -112,7 +90,26 @@ class _DetailState extends State<Detail> {
               height: 10,
             ),
             Text(
-              double.parse(instance.price).toStringAsFixed(2),
+              '₹ ${double.parse(instance.price).toStringAsFixed(2)}',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'SYMBOL',
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              instance.symbol,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,

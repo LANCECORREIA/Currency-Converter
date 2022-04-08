@@ -15,7 +15,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //redirects to loading screen
       initialRoute: '/',
+      //routes
       routes: {
         '/': (context) => Loading(),
         '/home': (context) => Home(),

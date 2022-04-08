@@ -15,8 +15,7 @@ class _HomeState extends State<Home> {
   List<bool> selected = [];
   Map passedArgs = {};
 
-  //use sharedpreference to save the selected currency
-
+  //sharedpreference to save the selected currency
   Future<void> _saveSelected() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //parse boolean list to string list
@@ -24,35 +23,6 @@ class _HomeState extends State<Home> {
         selected.map((e) => e ? 'true' : 'false').toList();
     prefs.setStringList('selected', string_selected);
   }
-
-  //use sharedpreference to load the selected currency
-  // Future<void> _loadSelected() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     List<String> string_selected = prefs.getStringList('selected') ?? [];
-  //     //parse string list to boolean list
-  //     selected =
-  //         string_selected.map((e) => e == 'true' ? true : false).toList();
-  //   });
-  // }
-
-  //use sharedpreference to check if selected currency exists
-  // Future<void> _checkSelected() async {
-  //   try {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     setState(() {
-  //       List<String> string_selected = prefs.getStringList('selected') ?? [];
-  //       //parse string list to boolean list
-  //       selected =
-  //           string_selected.map((e) => e == 'true' ? true : false).toList();
-  //       if (selected.length != data.length) {
-  //         selected = List.generate(data.length, (index) => false);
-  //       }
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +34,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Color.fromARGB(255, 234, 231, 231),
       appBar: AppBar(
         title: Text("Crypto Converter"),
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(255, 105, 239, 173),
         elevation: 0.0,
         actions: [
           IconButton(
@@ -119,8 +89,11 @@ class _HomeState extends State<Home> {
                   return Card(
                     child: ListTile(
                       tileColor: Colors.white,
-                      onTap: () => Navigator.pushNamed(context, '/detail',
-                          arguments: data[index]),
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pushNamed(context, '/detail',
+                            arguments: data[index]);
+                      },
                       leading: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 8.0),
                         child: CircleAvatar(
@@ -128,8 +101,32 @@ class _HomeState extends State<Home> {
                               AssetImage('assets/${data[index].name}.png'),
                         ),
                       ),
-                      title: Text(
-                          "${(input / double.parse(data[index].price)).toStringAsFixed(2)}"),
+                      title: Row(
+                        children: [
+                          Text(
+                            "${data[index].symbol}",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                "${(input / double.parse(data[index].price)).toStringAsFixed(2)}",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                       trailing: TextButton(
                         onPressed: () {
                           setState(() {
